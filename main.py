@@ -8,6 +8,6 @@ def main():
     response = requests.get("http://investor.koufu.com.sg/newsroom.html", headers=headers)
     soup = BeautifulSoup(response.content, 'html.parser')
     print(soup.prettify())
-
+    soup.findAll('div', {'class': 'ir_home_news_list'})
 if __name__ == "__main__":
     main() 
