@@ -6,7 +6,8 @@ headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/
 def main():
     print("Getting koufu")
     #koufu()
-    kimly()
+    #kimly()
+    talkmed()
 
 def koufu():
     url_koufu = 'http://investor.koufu.com.sg'
@@ -37,6 +38,20 @@ def kimly():
         r = requests.get("https://links.sgx.com"+a['href'], allow_redirects=True)
         open(a['href'].split('/')[-1], 'wb').write(r.content)
     #print(news)
+
+def talkmed():
+    url_talkmed = 'https://www.talkmed.com.sg/category/announcements/'
+    response = requests.get(url_talkmed, headers=headers)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    #print(soup.prettify())
+    news = soup.findAll('p', {'class': 'news-listing-title'})
+    print(news[0])
+    response = requests.get(news[0].a['href'] , headers=headers)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    for a in soup.select('a[href$=".pdf"]'):
+        print(a['href'])
+        r = requests.get(a['href'], allow_redirects=True)
+        open(a['href'].split('/')[-1], 'wb').write(r.content)
 
 if __name__ == "__main__":
     main() 
