@@ -2,3 +2,5 @@
 venv
 cavenv
 *ipynb*
+__pycache__
+deploy
